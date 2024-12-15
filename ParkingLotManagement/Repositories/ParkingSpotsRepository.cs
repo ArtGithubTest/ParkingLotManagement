@@ -2,10 +2,10 @@
 
 namespace ParkingLotManagement.Repositories
 {
-    public class ParkingSpotRepository
+    public class ParkingSpotsRepository
     {
         private readonly ParkingDbContext _context;
-        public ParkingSpotRepository(ParkingDbContext context)
+        public ParkingSpotsRepository(ParkingDbContext context)
         {
             _context = context;
         }

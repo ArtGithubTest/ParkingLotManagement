@@ -135,19 +135,27 @@ namespace ParkingLotManagement.Repositories
 
         }
 
+        //Will not be needed, is not in the LogsController
         public void UpdateLogs(Logs logs)
         {
 
             throw new Exception("Not allowed to update logs!");
         }
 
+
         public void DeleteLogs(int id)
         {
 
             var log = _context.Logs.FirstOrDefault(x => x.Id == id);
-            _context.Logs.Remove(log);
-            _context.SaveChanges();
+            if (log != null) {
+                _context.Logs.Remove(log);
+                _context.SaveChanges();
+            }
 
+            else
+            {
+                throw new Exception("Log does not exist.");
+            }
         }
 
 
