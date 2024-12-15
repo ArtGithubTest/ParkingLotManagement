@@ -79,7 +79,7 @@ namespace ParkingLotManagement.Repositories
                 existingSubscribers.PlateNumber = updatedSubscribers.PlateNumber;
                 existingSubscribers.IsDeleted = updatedSubscribers.IsDeleted;
 
-                existingSubscribers = updatedSubscribers;
+                //existingSubscribers = updatedSubscribers;
             }
            // _context.Subscribers.Update(updatedSubscribers);
             _context.SaveChanges();
