@@ -65,26 +65,6 @@ namespace ParkingLotManagement.Repositories
             return null;
         }
 
-        public void UpdateSubsribers(Subscribers updatedSubscribers)
-        {
-            var existingSubscribers = _context.Subscribers.FirstOrDefault(x => x.Id == updatedSubscribers.Id);
-            if (existingSubscribers != null)
-            {
-                existingSubscribers.FirstName = updatedSubscribers.FirstName;
-                existingSubscribers.LastName = updatedSubscribers.LastName;
-                existingSubscribers.IdCardNumber = updatedSubscribers.IdCardNumber;
-                existingSubscribers.Email = updatedSubscribers.Email;
-                existingSubscribers.PhoneNumber = updatedSubscribers.PhoneNumber;
-                existingSubscribers.Birthday = updatedSubscribers.Birthday;
-                existingSubscribers.PlateNumber = updatedSubscribers.PlateNumber;
-                existingSubscribers.IsDeleted = updatedSubscribers.IsDeleted;
-
-                //existingSubscribers = updatedSubscribers;
-            }
-           // _context.Subscribers.Update(updatedSubscribers);
-            _context.SaveChanges();
-        }
-
         public void DeleteSubscribers(Subscribers subscribers)
         {
             var existingSubscriber = _context.Subscribers.FirstOrDefault(x => x.Id == subscribers.Id);
