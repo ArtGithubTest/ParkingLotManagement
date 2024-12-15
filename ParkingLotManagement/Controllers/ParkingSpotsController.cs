@@ -8,35 +8,35 @@ namespace ParkingLotManagement.Controllers
     [Route("api/ParkingSpots")]
     public class ParkingSpotsController : Controller
     {
-        private readonly ParkingSpotRepository _parkingSpotRepository;
-        public ParkingSpotsController(ParkingSpotRepository parkingSpotRepository)
+        private readonly ParkingSpotsRepository _parkingSpotsRepository;
+        public ParkingSpotsController(ParkingSpotsRepository parkingSpotRepository)
         {
-            _parkingSpotRepository = parkingSpotRepository;
+            _parkingSpotsRepository = parkingSpotRepository;
         }
         [HttpPost()]
         public IActionResult CreateParkingSpot(ParkingSpots parkingSpot)
         {
-            _parkingSpotRepository.CreateParkingSpot(parkingSpot);
+            _parkingSpotsRepository.CreateParkingSpot(parkingSpot);
             return Ok();
         }
         // request qe kthen numrin e subsciberave ose vendet e rezervuara
         [HttpGet("Reserved")]
         public IActionResult GetReservedSpots()
         {
-            int activeSubscriberCount = _parkingSpotRepository.GetReservedSpots();
+            int activeSubscriberCount = _parkingSpotsRepository.GetReservedSpots();
             return Ok(activeSubscriberCount);
         }
         [HttpGet("Total")]
         public IActionResult GetTotalSpots()
         {
-            int totalSpots = _parkingSpotRepository.GetTotalSpots();
+            int totalSpots = _parkingSpotsRepository.GetTotalSpots();
             return Ok(totalSpots);
         }
         //request qe kthen vendet e lira = total - reserved
         [HttpGet("Free")]
         public IActionResult GetFreeSpots()
         {
-            int freeSpots = _parkingSpotRepository.GetFreeSpots();
+            int freeSpots = _parkingSpotsRepository.GetFreeSpots();
             return Ok(freeSpots);
         }
         //Rrequest qe BEN update ParkingSpot qe merr si parameter ID
@@ -48,19 +48,19 @@ namespace ParkingLotManagement.Controllers
                 Id = Id,
                 TotalSpots = updatedParkingSpot.TotalSpots
             };
-            _parkingSpotRepository.UpdateParkingSpot(parkingSpot);
+            _parkingSpotsRepository.UpdateParkingSpot(parkingSpot);
             return Ok();
         }
         [HttpGet("Occupied/Reserved")]
         public IActionResult GetOccupiedReservedSpots()
         {
-            int occupiedReservedSpots = _parkingSpotRepository.GetOccupiedReservedSpots();
+            int occupiedReservedSpots = _parkingSpotsRepository.GetOccupiedReservedSpots();
             return Ok(occupiedReservedSpots);
         }
         [HttpGet("Occupied/Regular")]
         public IActionResult GetOccupiedRegularSpots()
         {
-            int occupiedRegularSpots = _parkingSpotRepository.GetOccupiedRegularSpots();
+            int occupiedRegularSpots = _parkingSpotsRepository.GetOccupiedRegularSpots();
             return Ok(occupiedRegularSpots);
         }
     }
