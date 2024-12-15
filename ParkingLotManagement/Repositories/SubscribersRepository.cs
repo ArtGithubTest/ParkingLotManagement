@@ -87,10 +87,11 @@ namespace ParkingLotManagement.Repositories
 
         public void DeleteSubscribers(Subscribers subscribers)
         {
-            var existingSubsriber = _context.Subscribers.FirstOrDefault(x => x.Id == subscribers.Id);
-            if (existingSubsriber != null)
+            var existingSubscriber = _context.Subscribers.FirstOrDefault(x => x.Id == subscribers.Id);
+            if (existingSubscriber != null)
             {
-                _context.Subscribers.Remove(existingSubsriber);
+                existingSubscriber.IsDeleted = true;
+                existingSubscriber.IdCardNumber = "old_" + DateTime.Now.ToString() + existingSubscriber.IdCardNumber;
                 _context.SaveChanges();
             }
         }

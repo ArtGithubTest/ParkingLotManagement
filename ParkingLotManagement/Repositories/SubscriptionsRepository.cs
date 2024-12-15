@@ -28,5 +28,35 @@ namespace ParkingLotManagement.Repositories
             var subscriptions = _context.Subscriptions.Where(x => x.Code == code).ToList();
             return subscriptions;
         }
+        public List<Subscriptions> GetSubscriptionsBySubscribersName(string name)
+        {
+            var subsribers = _context.Subscribers.Where(y => y.FirstName == name).Select(i => i.Id).ToList();
+            var subscriptions = new List<Subscriptions>();
+            foreach (var subscriberId in subsribers)
+            {
+                subscriptions.Add(_context.Subscriptions.Where(i => i.SubscribersId == subscriberId && i.IsDeleted == false).FirstOrDefault());
+            }
+                return subscriptions;
+        }
+        public void UpdateSubscriptions(Subscriptions updatedSubscriptions)
+        {
+            var existingSubscriptions = _context.Subscriptions.FirstOrDefault(p => p.Id == updatedSubscriptions.Id);
+            if (existingSubscriptions != null)
+            {
+                existingSubscriptions = updatedSubscriptions;
+              
+            }
+            _context.SaveChanges();
+        }
+        public void DeleteSubscriptions(Subscriptions subscriptions)
+        {
+            var existingSubscriptions = _context.Subscriptions.FirstOrDefault(x => x.Id == subscriptions.Id);
+            if (existingSubscriptions != null)
+            {
+                existingSubscriptions.IsDeleted = true;
+                
+                _context.SaveChanges();
+            }
+        }
     }
 }
