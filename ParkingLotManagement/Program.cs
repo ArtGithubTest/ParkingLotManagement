@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ParkingLotManagement;
+using ParkingLotManagement.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,15 +18,22 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader();
+        .AllowAnyHeader();
     });
 });
+
+builder.Services.AddScoped<ParkingSpotsRepository>();
+builder.Services.AddScoped<PricingPlansRepository>();
+builder.Services.AddScoped<SubscribersRepository>();
+builder.Services.AddScoped<SubscriptionsRepository>();
+builder.Services.AddScoped<LogsRepository>();
+
 var app = builder.Build();
 app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint(/*"/swagger/v1/swagger.json", "StudentApi V1"*/ "/swagger/v1/swagger.json", "ParkingLotAPI V1");
+    c.SwaggerEndpoint(/*"/swagger/v1/swagger.json", "ParkingLotAPI V1"*/ "/swagger/v1/swagger.json", "ParkingLotAPI V1");
 });
 app.UseHttpsRedirection();
 app.UseAuthorization();
