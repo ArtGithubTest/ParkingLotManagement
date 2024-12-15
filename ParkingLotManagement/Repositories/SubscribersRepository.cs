@@ -12,7 +12,7 @@ namespace ParkingLotManagement.Repositories
         }
         public void CreateSubscribers(Subscribers subscribers)
         {
-            if(_context.Subscribers.Where(x => x.IdCardNumber == subscribers.IdCardNumber).Any())
+            if(_context.Subscribers.Any(x => x.IdCardNumber == subscribers.IdCardNumber))
             {
                 throw new Exception("User already exists.");
             }
@@ -65,15 +65,34 @@ namespace ParkingLotManagement.Repositories
             return null;
         }
 
-        public void DeletePricingPlans(int id)
+        public void UpdateSubsribers(Subscribers updatedSubscribers)
         {
-            var pricingPlan = _context.PricingPlans.Find(id);
-            if (id != null)
+            var existingSubscribers = _context.Subscribers.FirstOrDefault(x => x.Id == updatedSubscribers.Id);
+            if (existingSubscribers != null)
             {
-                _context.PricingPlans.Remove(pricingPlan);
+                existingSubscribers.FirstName = updatedSubscribers.FirstName;
+                existingSubscribers.LastName = updatedSubscribers.LastName;
+                existingSubscribers.IdCardNumber = updatedSubscribers.IdCardNumber;
+                existingSubscribers.Email = updatedSubscribers.Email;
+                existingSubscribers.PhoneNumber = updatedSubscribers.PhoneNumber;
+                existingSubscribers.Birthday = updatedSubscribers.Birthday;
+                existingSubscribers.PlateNumber = updatedSubscribers.PlateNumber;
+                existingSubscribers.IsDeleted = updatedSubscribers.IsDeleted;
+
+                existingSubscribers = updatedSubscribers;
+            }
+           // _context.Subscribers.Update(updatedSubscribers);
+            _context.SaveChanges();
+        }
+
+        public void DeleteSubscribers(Subscribers subscribers)
+        {
+            var existingSubsriber = _context.Subscribers.FirstOrDefault(x => x.Id == subscribers.Id);
+            if (existingSubsriber != null)
+            {
+                _context.Subscribers.Remove(existingSubsriber);
                 _context.SaveChanges();
             }
-
         }
     }
 }
