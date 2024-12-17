@@ -40,6 +40,7 @@ namespace ParkingLotManagement.Controllers
             }
             return subscriptions;
         }
+        [HttpPut("{Id}")]
         public IActionResult UpdateSubsciptions(int Id, Subscriptions updatedSubscriptions)
         {
             var subscriptions = new Subscriptions
