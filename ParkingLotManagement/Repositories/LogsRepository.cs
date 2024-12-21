@@ -110,6 +110,13 @@ namespace ParkingLotManagement.Repositories
             _context.SaveChanges();
         }
 
+        public List<Logs> GetAllLogs()
+        {
+
+            var logList = _context.Logs.ToList();
+            return logList;
+        }
+
         public List<Logs> GetLogsByDay(DateTime day)
         {
 

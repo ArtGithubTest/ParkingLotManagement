@@ -28,6 +28,12 @@ namespace ParkingLotManagement.Controllers
 
         }
 
+        [HttpGet("AllLogs")]
+        public IActionResult GetAllLogs()
+        {
+            var logsList = _logsRepository.GetAllLogs();
+            return Ok(logsList);
+        }
 
         [HttpGet("LogsByDay")]
         public IActionResult GetLogsByDay(DateTime day)
