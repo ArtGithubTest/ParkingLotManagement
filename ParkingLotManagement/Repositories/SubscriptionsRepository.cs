@@ -22,7 +22,7 @@ namespace ParkingLotManagement.Repositories
             }
             else
             {
-                if(_context.Subscribers.Any(x => x.Id == subscription.Id))
+                if(_context.Subscribers.Any(x => x.Id == subscription.SubscribersId))
                 {
                     _context.Subscriptions.Add(subscription);
                     _context.SaveChanges();
