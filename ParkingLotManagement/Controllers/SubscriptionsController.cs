@@ -19,6 +19,12 @@ namespace ParkingLotManagement.Controllers
             _subscriptionsRepository.CreateSubscription(subscriptions);
             return Ok();
         }
+        [HttpGet]
+        public IActionResult GetSubscriptions()
+        {
+            var subscriptionsList = _subscriptionsRepository.GetSubscriptions();
+            return Ok(subscriptionsList);
+        }
         [HttpGet("{code}")]
         public List<Subscriptions> GetSubscriptionsByCode(string code)
         {
