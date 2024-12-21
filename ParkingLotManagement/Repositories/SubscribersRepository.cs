@@ -27,7 +27,7 @@ namespace ParkingLotManagement.Repositories
         public void UpdateSubscribers(Subscribers updatedSubscribers)
         {
             var existingSubscribers = _context.Subscribers.FirstOrDefault(p => p.Id == updatedSubscribers.Id);
-            if (existingSubscribers != null)
+            if (existingSubscribers.Id == updatedSubscribers.Id)
             {
                 existingSubscribers.FirstName = updatedSubscribers.FirstName;
                 existingSubscribers.LastName = updatedSubscribers.LastName;
@@ -70,9 +70,9 @@ namespace ParkingLotManagement.Repositories
             return null;
         }
 
-        public void DeleteSubscribers(Subscribers subscribers)
+        public void DeleteSubscribers(int id)
         {
-            var existingSubscriber = _context.Subscribers.FirstOrDefault(x => x.Id == subscribers.Id);
+            var existingSubscriber = _context.Subscribers.Find(id);
             if (existingSubscriber != null)
             {
                 existingSubscriber.IsDeleted = true;

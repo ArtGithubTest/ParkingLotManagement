@@ -61,10 +61,10 @@ namespace ParkingLotManagement.Controllers
             var subscribersList = _subscribersRepository.GetById(id);
             return Ok(subscribersList);
         }
-        [HttpDelete("{Id}")]
-        public IActionResult DeleteSubscribers(Subscribers subscriberId)
+        [HttpDelete]
+        public IActionResult DeleteSubscribers(int id)
         {
-            _subscribersRepository.DeleteSubscribers(subscriberId);
+            _subscribersRepository.DeleteSubscribers(id);
             return Ok();
         }
     }
