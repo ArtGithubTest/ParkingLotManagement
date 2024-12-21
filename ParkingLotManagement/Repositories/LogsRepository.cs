@@ -1,4 +1,5 @@
-﻿using ParkingLotManagement.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using ParkingLotManagement.Models;
 namespace ParkingLotManagement.Repositories
 
 {
@@ -12,6 +13,12 @@ namespace ParkingLotManagement.Repositories
         }
         public void CreateLog(Logs log)
         {
+            var logCodeList = GetLogsByCode(log.Code).ToList();
+            if (logCodeList.Count > 0)
+            {
+                throw new Exception("Log with the same code already exists");
+            }
+
             var pricingPlanWeekend = _context.PricingPlans.Where(i => i.Type == PricingPlansType.Weekend).FirstOrDefault();
 
             var pricingPlanWeekday = _context.PricingPlans.Where(i => i.Type == PricingPlansType.Weekday).FirstOrDefault();

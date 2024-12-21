@@ -18,8 +18,14 @@ namespace ParkingLotManagement.Controllers
         [HttpPost()]
         public IActionResult CreateLog(Logs log)
         {
-            _logsRepository.CreateLog(log);
+
+            try { _logsRepository.CreateLog(log); }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok();
+
         }
 
 
