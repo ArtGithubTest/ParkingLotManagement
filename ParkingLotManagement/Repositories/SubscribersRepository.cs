@@ -10,6 +10,11 @@ namespace ParkingLotManagement.Repositories
         {
             _context = context;
         }
+        public List<Subscribers> GetSubscribers()
+        {
+            var allSubscribers = _context.Subscribers.ToList();
+            return allSubscribers;
+        }
         public void CreateSubscribers(Subscribers subscribers)
         {
             if(_context.Subscribers.Any(x => x.IdCardNumber == subscribers.IdCardNumber))

@@ -25,6 +25,12 @@ namespace ParkingLotManagement.Controllers
             _subscribersRepository.UpdateSubscribers(subscriber);
             return Ok();
         }
+        [HttpGet]
+        public IActionResult GetSubscribers()
+        {
+            var subscribersList = _subscribersRepository.GetSubscribers();
+            return Ok(subscribersList);
+        }
         [HttpGet("FirstName")]
         public IActionResult GetSubscribersByFirstName(string firstName)
         {
