@@ -9,7 +9,11 @@ namespace ParkingLotManagement.Repositories
         {
             _context = context;
         }
-
+        public List<Subscriptions> GetSubscriptions()
+        {
+            var allSubscriptions = _context.Subscriptions.ToList();
+            return allSubscriptions;
+        }
         public void CreateSubscription(Subscriptions subscription)
         {
             if (_context.Subscriptions.Any(x => x.Code == subscription.Code))
@@ -18,8 +22,15 @@ namespace ParkingLotManagement.Repositories
             }
             else
             {
-                _context.Subscriptions.Add(subscription);
-                _context.SaveChanges();
+                if(_context.Subscribers.Any(x => x.Id == subscription.Id))
+                {
+                    _context.Subscriptions.Add(subscription);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Subscriber with this ID does not exist.");
+                }
             }
         }
 
