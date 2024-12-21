@@ -25,8 +25,13 @@ namespace ParkingLotManagement.Repositories
                 existingPricingPlans.DailyPricing = updatedPricingPlans.DailyPricing;
                 existingPricingPlans.MinimumHours = updatedPricingPlans.MinimumHours;
                 existingPricingPlans.Type = updatedPricingPlans.Type;
+                _context.SaveChanges();
+
             }
-            _context.SaveChanges();
+            else
+            {
+                throw new Exception("Pricing plan with this ID does not exist");
+            }
         }
         
         public List<PricingPlans> GetPricingPlans()
@@ -42,6 +47,10 @@ namespace ParkingLotManagement.Repositories
             {
                 _context.PricingPlans.Remove(pricingPlan);
                 _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Pricing plan with this ID does not exist");
             }
             
         }

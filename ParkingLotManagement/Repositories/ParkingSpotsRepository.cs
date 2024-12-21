@@ -21,7 +21,6 @@ namespace ParkingLotManagement.Repositories
             if (existingParkingSpot != null)
             {
                 existingParkingSpot.TotalSpots = updatedParkingSpot.TotalSpots;
-                existingParkingSpot.ReservedSpots = updatedParkingSpot.ReservedSpots;
             }
             _context.SaveChanges();
         }

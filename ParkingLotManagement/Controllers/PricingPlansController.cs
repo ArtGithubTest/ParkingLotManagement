@@ -33,8 +33,15 @@ namespace ParkingLotManagement.Controllers
                 Type = updatedPricingPlans.Type
             };
 
-            _pricingPlansRepository.UpdatePricingPlans(pricingPlans);
-            return Ok();
+            try
+            {
+                _pricingPlansRepository.UpdatePricingPlans(pricingPlans);
+                return Ok();
+
+            }
+            catch (Exception ex) { 
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet()]
         public IActionResult GetPricingPlans()
@@ -46,9 +53,16 @@ namespace ParkingLotManagement.Controllers
         [HttpDelete("{Id}")]
         public IActionResult DeletePricingPlans(int Id)
         {
+            try
+            {
+                _pricingPlansRepository.DeletePricingPlans(Id);
+                return Ok();
 
-            _pricingPlansRepository.DeletePricingPlans(Id);
-            return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

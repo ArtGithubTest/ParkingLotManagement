@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using ParkingLotManagement.Models;
+﻿using ParkingLotManagement.Models;
 namespace ParkingLotManagement.Repositories
 
 {
@@ -25,41 +24,32 @@ namespace ParkingLotManagement.Repositories
 
             if (log.SubscriptionsId == null)
             {
-
-                TimeSpan timeSpan = (log.CheckOutTime - log.CheckInTime);
-
-                if (timeSpan.Minutes <= 15)
+                if (log.CheckOutTime == null)
                 {
                     log.Price = 0;
                 }
-
-                else if (timeSpan.Hours <= pricingPlanWeekday.MinimumHours)
-                {
-                    if (log.CheckOutTime.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.DayOfWeek.ToString() == "Sunday")
-                    {
-                        var timeExactHours = (double)timeSpan.Minutes / 60;
-                        log.Price = timeExactHours * pricingPlanWeekend.HourlyPricing;
-                    }
-                    else
-                    {
-                        var timeExactHours = (double)timeSpan.Minutes / 60;
-                        log.Price = timeExactHours * pricingPlanWeekday.HourlyPricing;
-
-                    }
-
-                }
-
                 else
                 {
-                    if (timeSpan.Hours <= 24)
+                    
+
+                    TimeSpan timeSpan = (log.CheckOutTime.Value - log.CheckInTime);
+
+                    if (timeSpan.Minutes <= 15)
                     {
-                        if (log.CheckOutTime.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.DayOfWeek.ToString() == "Sunday")
+                        log.Price = 0;
+                    }
+
+                    else if (timeSpan.Hours <= pricingPlanWeekday.MinimumHours)
+                    {
+                        if (log.CheckOutTime.Value.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.Value.DayOfWeek.ToString() == "Sunday")
                         {
-                            log.Price = pricingPlanWeekend.DailyPricing;
+                            var timeExactHours = (double)timeSpan.Minutes / 60;
+                            log.Price = timeExactHours * pricingPlanWeekend.HourlyPricing;
                         }
                         else
                         {
-                            log.Price = pricingPlanWeekday.DailyPricing;
+                            var timeExactHours = (double)timeSpan.Minutes / 60;
+                            log.Price = timeExactHours * pricingPlanWeekday.HourlyPricing;
 
                         }
 
@@ -67,36 +57,52 @@ namespace ParkingLotManagement.Repositories
 
                     else
                     {
-                        int days = timeSpan.Days;
-
-
-                        var timeExactHours = (double)timeSpan.Minutes / 60 - days * 24;
-
-
-
-                        if (timeExactHours < pricingPlanWeekday.MinimumHours)
+                        if (timeSpan.Hours <= 24)
                         {
-                            if (log.CheckOutTime.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.DayOfWeek.ToString() == "Sunday")
+                            if (log.CheckOutTime.Value.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.Value.DayOfWeek.ToString() == "Sunday")
                             {
-                                log.Price = days * pricingPlanWeekday.DailyPricing + timeExactHours * pricingPlanWeekend.HourlyPricing;
-
+                                log.Price = pricingPlanWeekend.DailyPricing;
                             }
                             else
                             {
-                                log.Price = days * pricingPlanWeekday.DailyPricing + timeExactHours * pricingPlanWeekday.HourlyPricing;
+                                log.Price = pricingPlanWeekday.DailyPricing;
 
                             }
+
                         }
 
-                        log.Price = (days + 1) * pricingPlanWeekday.DailyPricing;
+                        else
+                        {
+                            int days = timeSpan.Days;
 
+
+                            var timeExactHours = (double)timeSpan.Minutes / 60 - days * 24;
+
+
+
+                            if (timeExactHours < pricingPlanWeekday.MinimumHours)
+                            {
+                                if (log.CheckOutTime.Value.DayOfWeek.ToString() == "Saturday" || log.CheckOutTime.Value.DayOfWeek.ToString() == "Sunday")
+                                {
+                                    log.Price = days * pricingPlanWeekday.DailyPricing + timeExactHours * pricingPlanWeekend.HourlyPricing;
+
+                                }
+                                else
+                                {
+                                    log.Price = days * pricingPlanWeekday.DailyPricing + timeExactHours * pricingPlanWeekday.HourlyPricing;
+
+                                }
+                            }
+
+                            log.Price = (days + 1) * pricingPlanWeekday.DailyPricing;
+
+
+                        }
 
                     }
 
+
                 }
-
-
-
 
 
             }
@@ -104,7 +110,6 @@ namespace ParkingLotManagement.Repositories
             {
                 log.Price = 0;
             }
-
 
             _context.Logs.Add(log);
             _context.SaveChanges();
@@ -161,7 +166,8 @@ namespace ParkingLotManagement.Repositories
         {
 
             var log = _context.Logs.FirstOrDefault(x => x.Id == id);
-            if (log != null) {
+            if (log != null)
+            {
                 _context.Logs.Remove(log);
                 _context.SaveChanges();
             }
