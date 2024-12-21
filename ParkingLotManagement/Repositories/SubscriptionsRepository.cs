@@ -59,9 +59,9 @@ namespace ParkingLotManagement.Repositories
             }
             _context.SaveChanges();
         }
-        public void DeleteSubscriptions(Subscriptions subscriptions)
+        public void DeleteSubscriptions(int id )
         {
-            var existingSubscriptions = _context.Subscriptions.FirstOrDefault(x => x.Id == subscriptions.Id);
+            var existingSubscriptions = _context.Subscriptions.Find(id);
             if (existingSubscriptions != null)
             {
                 existingSubscriptions.IsDeleted = true;
