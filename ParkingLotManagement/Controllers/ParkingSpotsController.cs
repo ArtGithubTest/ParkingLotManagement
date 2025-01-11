@@ -33,10 +33,10 @@ namespace ParkingLotManagement.Controllers
             return Ok(totalSpots);
         }
         //request qe kthen vendet e lira = total - reserved
-        [HttpGet("Free")]
-        public IActionResult GetFreeSpots()
+        [HttpGet("Regular")]
+        public IActionResult GetRegularSpots()
         {
-            int freeSpots = _parkingSpotRepository.GetFreeSpots();
+            int freeSpots = _parkingSpotRepository.GetRegularSpots();
             return Ok(freeSpots);
         }
         //Rrequest qe BEN update ParkingSpot qe merr si parameter ID
@@ -62,6 +62,18 @@ namespace ParkingLotManagement.Controllers
         {
             int occupiedRegularSpots = _parkingSpotRepository.GetOccupiedRegularSpots();
             return Ok(occupiedRegularSpots);
+        }
+        [HttpGet("Available/Regular")]
+        public IActionResult GetAvailableRegularSpots()
+        {
+            int availableRegularSpots = _parkingSpotRepository.GetAvailableRegularSpots();
+            return Ok(availableRegularSpots);
+        }
+        [HttpGet("Available/Reserved")]
+        public IActionResult GetAvailableReservedSpots()
+        {
+            int availableReservedSpots = _parkingSpotRepository.GetAvailableReservedSpots();
+            return Ok(availableReservedSpots);
         }
     }
 }

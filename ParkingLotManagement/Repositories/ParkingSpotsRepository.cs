@@ -26,15 +26,23 @@ namespace ParkingLotManagement.Repositories
         }
         public int GetReservedSpots()
         {
-            var activeSubscriberCount = _context.Subscribers.Count(subscriber => !subscriber.IsDeleted);
+            var activeSubscriberCount = _context.Subscriptions.Count(subscriber => !subscriber.IsDeleted);
             return activeSubscriberCount;
         }
         public int GetTotalSpots()
         {
-            var totalSpots = _context.ParkingSpots.FirstOrDefault().TotalSpots;
-            return totalSpots;
+            var exists = _context.ParkingSpots.Count();
+            if (exists == 0)
+            {
+                throw new Exception("You havent added total spots in database");
+            }
+            else
+            {
+                var totalSpots = _context.ParkingSpots.FirstOrDefault().TotalSpots;
+                return totalSpots;
+            }
         }
-        public int GetFreeSpots()
+        public int GetRegularSpots()
         {
             int totalSpots = GetTotalSpots();
             int reservedSpots = GetReservedSpots();
@@ -50,6 +58,16 @@ namespace ParkingLotManagement.Repositories
         {
             var checkedInReservedSpots = _context.Logs.Count(log => log.CheckOutTime == null && log.SubscriptionsId != null);
             return checkedInReservedSpots;
+        }
+        public int GetAvailableRegularSpots()
+        {
+            var availableRegularSpots = GetRegularSpots() - GetOccupiedRegularSpots();
+            return availableRegularSpots;
+        }
+        public int GetAvailableReservedSpots()
+        {
+            var availableReservedSpots = GetReservedSpots() - GetOccupiedReservedSpots();
+            return availableReservedSpots;
         }
     }
 }
