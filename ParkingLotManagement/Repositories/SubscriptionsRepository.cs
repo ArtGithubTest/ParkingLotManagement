@@ -52,10 +52,17 @@ namespace ParkingLotManagement.Repositories
         public void UpdateSubscriptions(Subscriptions updatedSubscriptions)
         {
             var existingSubscriptions = _context.Subscriptions.FirstOrDefault(p => p.Id == updatedSubscriptions.Id);
-            if (existingSubscriptions != null)
+            if (existingSubscriptions.Id == updatedSubscriptions.Id)
             {
-                existingSubscriptions = updatedSubscriptions;
-              
+                existingSubscriptions.Code = updatedSubscriptions.Code;
+                //existingSubscriptions.SubscribersId = updatedSubscriptions.SubscribersId;
+                existingSubscriptions.Price = updatedSubscriptions.Price;
+                existingSubscriptions.DiscountValue = updatedSubscriptions.DiscountValue;
+                existingSubscriptions.StartDate = updatedSubscriptions.StartDate;
+                existingSubscriptions.EndDate = updatedSubscriptions.EndDate;
+                existingSubscriptions.IsDeleted = updatedSubscriptions.IsDeleted;
+
+
             }
             _context.SaveChanges();
         }
